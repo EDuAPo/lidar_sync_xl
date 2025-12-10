@@ -1,0 +1,157 @@
+# Multi-LiDAR Synchronization Configuration
+
+global_settings:
+  lidar_count: 5
+  sync_tolerance_ms: 10.0          # 时间同步容差（毫秒）
+  max_queue_size: 10               # ROS2订阅队列大小
+  publish_rate_hz: 10.0            # 同步数据发布频率
+  enable_diagnostics: true         # 启用诊断信息
+  drop_unsync_frames: true         # 丢弃不同步的帧
+  publish_fused_cloud: false       # 是否发布融合点云
+  fused_topic: "/fusion/points"   # 融合点云话题
+  fused_frame_id: "fusion_base"   # 融合坐标系
+  enable_camera_sync: false        # 是否发布相机同步信号
+  camera_sync_topic: "/fusion/camera_sync"
+  camera_sync_tolerance_ms: 5.0
+
+lidars:
+  - id: 0
+    name: "iv_points_front_left"
+    topic: "/iv_points_front_left/points"
+    frame_id: "iv_points_front_left"
+    enabled: true
+  - id: 1
+    name: "iv_points_front_right"
+    topic: "/iv_points_front_right/points"
+    frame_id: "iv_points_front_right"
+    enabled: true
+  - id: 2
+    name: "iv_points_front_mid"
+    topic: "/iv_points_front_mid/points"
+    frame_id: "iv_points_front_mid"
+    enabled: true
+  - id: 3
+    name: "iv_points_rear_left"
+    topic: "/iv_points_rear_left/points"
+    frame_id: "iv_points_rear_left"
+    enabled: true
+  - id: 4
+    name: "iv_points_rear_right"
+    topic: "/iv_points_rear_right/points"
+    frame_id: "iv_points_rear_right"
+    enabled: true
+
+output:
+  publish_sync_data: true
+  sync_topic_prefix: "/lidar_sync"
+  publish_merged_cloud: true
+  merged_topic: "/lidar_merged/points"
+
+calibration_profiles:
+  '2025_11_01_08_00':
+    lidar:
+      iv_points_front_left:
+        translation: [2.048, 0.5695, 0.698]
+        rpy_angles: [-1.5442076301225178, -0.45, 42.74609597501323]
+      iv_points_front_right:
+        translation: [2.048, -0.5695, 0.698]
+        rpy_angles: [1.1242053622527801, 0.03454643159043358, -41.40078974679549]
+      iv_points_front_mid:
+        translation: [1.946, 0.02, 1.408]
+        rpy_angles: [-0.41023205173571814, -3.086042357821835, -0.054874689053977514]
+      iv_points_rear_left:
+        translation: [-0.794, 0.594, 0.698]
+        rpy_angles: [0.5660686949842857, 0.1259168300444039, 131.06312131894165]
+      iv_points_rear_right:
+        translation: [-0.794, -0.593, 0.698]
+        rpy_angles: [2.45, 1.919496934903844, -123.381177870804]
+    camera:
+      camera_cam_8M_wa_front:
+        ext_translation: [1.946, 0.007, 0.998]
+        ext_quaternion_wxyz: [-0.49960934, 0.49097698, -0.50031094, 0.50894113]
+        ext_rpy_angles: [0, 0, 0]
+        focal_length: [1923.77263, 1924.71305]
+        principal_point: [1914.74603, 1131.61475]
+        distortion_coeffs: [-0.319543334, 0.108013901, 6.43760453e-06, -9.69524494e-05, -0.0168342887]
+      camera_cam_3M_left:
+        ext_translation: [0.6399342363722622, 0.5465569043094777, 0.7740377856469716]
+        ext_quaternion_wxyz: [0.6043743784914373, -0.7965188127280065, -0.009603685458836405, -0.014041396620831974]
+        ext_rpy_angles: [0.0, 0.0, 0.0]
+        focal_length: [574.46857959, 574.74972345]
+        principal_point: [959.90342689, 764.76712126]
+        distortion_coeffs: [0.014729234, -0.00518548001, -0.00140932415, 8.43700503e-05]
+      camera_cam_3M_right:
+        ext_translation: [0.6370943155534893, -0.5415086896102413, 0.767813168376311]
+        ext_quaternion_wxyz: [0.005813563216857122, 0.02445160333385736, 0.7852763089378643, -0.618635143035094]
+        ext_rpy_angles: [0.0, 0.0, 0.0]
+        focal_length: [571.88705254, 572.39154819]
+        principal_point: [962.36612444, 767.3246358]
+        distortion_coeffs: [0.01649807, -0.00668417, 0.00043621, -0.00045291]
+      camera_cam_3M_front:
+        ext_translation: [2.0554651664686703, -0.0060563259766355515, 0.7719874730328724]
+        ext_quaternion_wxyz: [0.4415371387248132, -0.5440991986513865, 0.5595174989342959, -0.44265244327794473]
+        ext_rpy_angles: [0.0, 0.0, 0.0]
+        focal_length: [570.58060231, 570.72929139]
+        principal_point: [961.14455421, 764.61773278]
+        distortion_coeffs: [0.01384849, -0.00557897, -0.00019125, -0.000271]
+      camera_cam_3M_rear:
+        ext_translation: [-0.8120441845528125, -0.007706656679650613, 0.7790851763643512]
+        ext_quaternion_wxyz: [-0.45631587, 0.54542812, 0.5406334, -0.44944356]
+        ext_rpy_angles: [0.0, 0.0, 0.0]
+        focal_length: [572.8924374, 573.1017971]
+        principal_point: [954.37442618, 763.51180296]
+        distortion_coeffs: [0.0168507092, -0.00639218326, -0.000988783168, 5.17753632e-05]
+
+  '2025_11_10_16_00':
+    lidar:
+      iv_points_front_left:
+        translation: [2.048, 0.5695, 0.698]
+        rpy_angles: [-1.5442076301225178, -0.45, 42.74609597501323]
+      iv_points_front_right:
+        translation: [2.048, -0.5695, 0.698]
+        rpy_angles: [1.1242053622527801, 0.03454643159043358, -41.40078974679549]
+      iv_points_front_mid:
+        translation: [1.946, 0.02, 1.408]
+        rpy_angles: [0.5, -0.6, 0.6]
+      iv_points_rear_left:
+        translation: [-0.794, 0.594, 0.698]
+        rpy_angles: [0.5660686949842857, 0.1259168300444039, 131.06312131894165]
+      iv_points_rear_right:
+        translation: [-0.794, -0.593, 0.698]
+        rpy_angles: [2.45, 1.919496934903844, -123.381177870804]
+    camera:
+      camera_cam_8M_wa_front:
+        ext_translation: [1.946, 0.0235, 0.998]
+        ext_quaternion_wxyz: [0.49572481, -0.49928651, 0.50428056, -0.50067057]
+        ext_rpy_angles: [0, 0, 0]
+        focal_length: [1923.77263, 1924.71305]
+        principal_point: [1914.74603, 1131.61475]
+        distortion_coeffs: [-0.319543334, 0.108013901, 6.43760453e-06, -9.69524494e-05, -0.0168342887]
+      camera_cam_3M_left:
+        ext_translation: [0.6399342363722622, 0.5465569043094777, 0.7740377856469716]
+        ext_quaternion_wxyz: [0.6043743784914373, -0.7965188127280065, -0.009603685458836405, -0.014041396620831974]
+        ext_rpy_angles: [0.0, 0.0, 0.0]
+        focal_length: [574.46857959, 574.74972345]
+        principal_point: [959.90342689, 764.76712126]
+        distortion_coeffs: [0.014729234, -0.00518548001, -0.00140932415, 8.43700503e-05]
+      camera_cam_3M_right:
+        ext_translation: [0.6370943155534893, -0.5415086896102413, 0.767813168376311]
+        ext_quaternion_wxyz: [-0.01075265, 0.01751062, 0.78566911, -0.61830559]
+        ext_rpy_angles: [0.0, 0.0, 0.0]
+        focal_length: [571.88705254, 572.39154819]
+        principal_point: [962.36612444, 767.3246358]
+        distortion_coeffs: [0.01649807, -0.00668417, 0.00043621, -0.00045291]
+      camera_cam_3M_front:
+        ext_translation: [2.0554651664686703, -0.0060563259766355515, 0.7719874730328724]
+        ext_quaternion_wxyz: [0.37554271, -0.59727991, 0.60367301, -0.37121864]
+        ext_rpy_angles: [0.0, 0.0, 0.0]
+        focal_length: [570.58060231, 570.72929139]
+        principal_point: [961.14455421, 764.61773278]
+        distortion_coeffs: [0.01384849, -0.00557897, -0.00019125, -0.000271]
+      camera_cam_3M_rear:
+        ext_translation: [-0.8120441845528125, -0.007706656679650613, 0.7790851763643512]
+        ext_quaternion_wxyz: [-0.38625309, 0.59428544, 0.59424186, -0.38014468]
+        ext_rpy_angles: [0.0, 0.0, 0.0]
+        focal_length: [572.8924374, 573.1017971]
+        principal_point: [954.37442618, 763.51180296]
+        distortion_coeffs: [0.0168507092, -0.00639218326, -0.000988783168, 5.17753632e-05]
