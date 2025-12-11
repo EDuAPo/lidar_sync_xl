@@ -1,0 +1,33 @@
+[35m[1mConsolidate compiler generated dependencies of target multi_lidar_sync_node[0m
+[ 20%] [32mBuilding CXX object CMakeFiles/multi_lidar_sync_node.dir/src/lidar_processor.cpp.o[0m
+[ 40%] [32m[1mLinking CXX executable multi_lidar_sync_node[0m
+[100%] Built target multi_lidar_sync_node
+-- Install configuration: ""
+-- Installing: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/lib/multi_lidar_sync/multi_lidar_sync_node
+-- Set runtime path of "/home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/lib/multi_lidar_sync/multi_lidar_sync_node" to ""
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/launch
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/launch/multi_lidar_sync.launch.py
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/config
+-- Installing: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/config/params.yaml
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/config/lidar_config.yaml
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/include
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/include/multi_lidar_sync
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/include/multi_lidar_sync/multi_lidar_processor.hpp
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/include/multi_lidar_sync/lidar_types.hpp
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/include/multi_lidar_sync/lidar_buffer_manager.hpp
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/include/multi_lidar_sync/lidar_processor.hpp
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/ament_index/resource_index/package_run_dependencies/multi_lidar_sync
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/ament_index/resource_index/parent_prefix_path/multi_lidar_sync
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/environment/ament_prefix_path.sh
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/environment/path.sh
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/environment/path.dsv
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/local_setup.bash
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/local_setup.sh
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/local_setup.zsh
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/local_setup.dsv
+-- Installing: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/package.dsv
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/ament_index/resource_index/packages/multi_lidar_sync
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/cmake/multi_lidar_syncConfig.cmake
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/cmake/multi_lidar_syncConfig-version.cmake
+-- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/package.xml

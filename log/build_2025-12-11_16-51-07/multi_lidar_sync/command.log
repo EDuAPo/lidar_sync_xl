@@ -1,0 +1,4 @@
+Invoking command in '/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync -- -j24 -l24
+Invoked command in '/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync -- -j24 -l24
+Invoking command in '/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync
+Invoked command in '/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync

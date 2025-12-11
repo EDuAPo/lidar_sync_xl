@@ -39,10 +39,32 @@ bool LidarProcessor::start()
         return false;
     }
     
-    // 创建订阅者 - 使用 RELIABLE QoS 以匹配大多数 LiDAR 驱动
-    auto qos = rclcpp::QoS(rclcpp::KeepLast(10));
-    qos.reliability(rclcpp::ReliabilityPolicy::Reliable);
-    qos.durability(rclcpp::DurabilityPolicy::Volatile);
+    // 使用 10 作为队列深度，兼容大多数发布者
+    auto qos = rclcpp::QoS(10);
+    
+    // 检查话题是否存在并获取发布者 QoS
+    auto topic_info_list = node_->get_publishers_info_by_topic(config_.topic);
+    if (!topic_info_list.empty())
+    {
+        auto& pub_qos = topic_info_list[0].qos_profile();
+        RCLCPP_INFO(node_->get_logger(),
+            "[%s] Publisher QoS - Reliability: %s, Durability: %s",
+            config_.name.c_str(),
+            pub_qos.reliability() == rclcpp::ReliabilityPolicy::Reliable ? "RELIABLE" : "BEST_EFFORT",
+            pub_qos.durability() == rclcpp::DurabilityPolicy::Volatile ? "VOLATILE" : "OTHER");
+        
+        // 自动适配发布者的 QoS
+        qos.reliability(pub_qos.reliability());
+        qos.durability(pub_qos.durability());
+    }
+    else
+    {
+        RCLCPP_WARN(node_->get_logger(),
+            "[%s] No publisher found for topic %s, using default QoS (Reliable/Volatile)",
+            config_.name.c_str(), config_.topic.c_str());
+        qos.reliable();
+        qos.durability_volatile();
+    }
     
     sub_ = node_->create_subscription<sensor_msgs::msg::PointCloud2>(
         config_.topic,
@@ -51,8 +73,18 @@ bool LidarProcessor::start()
     
     is_running_.store(true);
     
-    RCLCPP_INFO(node_->get_logger(),
-        "Started LiDAR processor: %s (QoS: Reliable)", config_.name.c_str());
+    // 验证订阅是否创建成功
+    if (sub_)
+    {
+        RCLCPP_INFO(node_->get_logger(),
+            "Started LiDAR processor: %s (subscription created)", config_.name.c_str());
+    }
+    else
+    {
+        RCLCPP_ERROR(node_->get_logger(),
+            "Failed to create subscription for %s", config_.name.c_str());
+        return false;
+    }
     
     return true;
 }
@@ -85,22 +117,17 @@ void LidarProcessor::pointCloudCallback(const sensor_msgs::msg::PointCloud2::Sha
     frame.cloud_msg = msg;
     
     // 从消息头获取时间戳
-    frame.timestamp_ns = static_cast<uint64_t>(msg->header.stamp.sec) * 1000000000ULL 
-                        + static_cast<uint64_t>(msg->header.stamp.nanosec);
+    frame.timestamp_ns = msg->header.stamp.sec * 1000000000ULL + msg->header.stamp.nanosec;
     
-    // 分配序号（从1开始，避免0被误判为无效）
-    frame.sequence = frame_sequence_.fetch_add(1, std::memory_order_relaxed) + 1;
+    // 分配序号
+    frame.sequence = frame_sequence_.fetch_add(1, std::memory_order_relaxed);
     
     frame.valid = true;
     frame.lidar_id = config_.id;
     
-    // 每收到数据就打印一次（调试用，后续可改为 DEBUG 级别）
-    RCLCPP_INFO_THROTTLE(node_->get_logger(), *node_->get_clock(), 2000,
-        "[%s] Received: seq=%u, points=%u, ts=%lu",
-        config_.name.c_str(), 
-        frame.sequence, 
-        msg->width * msg->height,
-        frame.timestamp_ns);
+    RCLCPP_DEBUG_THROTTLE(node_->get_logger(), *node_->get_clock(), 2000,
+        "LiDAR %s received frame seq=%u ts=%lu ns",
+        config_.name.c_str(), frame.sequence, frame.timestamp_ns);
     
     // 写入缓冲区
     if (!buffer_manager->setFrame(frame))
