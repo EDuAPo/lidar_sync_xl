@@ -39,11 +39,10 @@ bool LidarProcessor::start()
         return false;
     }
     
-    // 创建订阅者 - 使用 RELIABLE QoS 以兼容 rosbag 播放
-    // 同时也兼容 best_effort 的实时数据源
-    auto qos = rclcpp::QoS(rclcpp::KeepLast(10));
-    qos.reliability(rclcpp::ReliabilityPolicy::Reliable);
-    qos.durability(rclcpp::DurabilityPolicy::Volatile);
+    // 创建订阅者 - 使用 SensorDataQoS (BestEffort + Volatile)
+    // 这是传感器数据的标准 QoS，兼容大多数 LiDAR 驱动
+    rclcpp::SensorDataQoS qos;
+    qos.keep_last(10);
     
     sub_ = node_->create_subscription<sensor_msgs::msg::PointCloud2>(
         config_.topic,
@@ -53,7 +52,7 @@ bool LidarProcessor::start()
     is_running_.store(true);
     
     RCLCPP_INFO(node_->get_logger(),
-        "Started LiDAR processor: %s", config_.name.c_str());
+        "Started LiDAR processor: %s (QoS: BestEffort)", config_.name.c_str());
     
     return true;
 }
@@ -86,17 +85,22 @@ void LidarProcessor::pointCloudCallback(const sensor_msgs::msg::PointCloud2::Sha
     frame.cloud_msg = msg;
     
     // 从消息头获取时间戳
-    frame.timestamp_ns = msg->header.stamp.sec * 1000000000ULL + msg->header.stamp.nanosec;
+    frame.timestamp_ns = static_cast<uint64_t>(msg->header.stamp.sec) * 1000000000ULL 
+                        + static_cast<uint64_t>(msg->header.stamp.nanosec);
     
-    // 分配序号
-    frame.sequence = frame_sequence_.fetch_add(1, std::memory_order_relaxed);
+    // 分配序号（从1开始，避免0被误判为无效）
+    frame.sequence = frame_sequence_.fetch_add(1, std::memory_order_relaxed) + 1;
     
     frame.valid = true;
     frame.lidar_id = config_.id;
     
-    RCLCPP_DEBUG_THROTTLE(node_->get_logger(), *node_->get_clock(), 2000,
-        "LiDAR %s received frame seq=%u ts=%lu ns",
-        config_.name.c_str(), frame.sequence, frame.timestamp_ns);
+    // 每收到数据就打印一次（调试用，后续可改为 DEBUG 级别）
+    RCLCPP_INFO_THROTTLE(node_->get_logger(), *node_->get_clock(), 2000,
+        "[%s] Received: seq=%u, points=%u, ts=%lu",
+        config_.name.c_str(), 
+        frame.sequence, 
+        msg->width * msg->height,
+        frame.timestamp_ns);
     
     // 写入缓冲区
     if (!buffer_manager->setFrame(frame))
