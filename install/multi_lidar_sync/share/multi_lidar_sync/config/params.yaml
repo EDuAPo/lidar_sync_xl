@@ -2,7 +2,7 @@
 multi_lidar_sync_node:
   ros__parameters:
     global_settings:
-      lidar_count: 5
+      lidar_count: 3
       sync_tolerance_ms: 100.0
       max_queue_size: 10
       publish_rate_hz: 10.0

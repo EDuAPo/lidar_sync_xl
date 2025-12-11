@@ -39,10 +39,10 @@ bool LidarProcessor::start()
         return false;
     }
     
-    // 创建订阅者 - 使用 SensorDataQoS (BestEffort + Volatile)
-    // 这是传感器数据的标准 QoS，兼容大多数 LiDAR 驱动
-    rclcpp::SensorDataQoS qos;
-    qos.keep_last(10);
+    // 创建订阅者 - 使用 RELIABLE QoS 以匹配大多数 LiDAR 驱动
+    auto qos = rclcpp::QoS(rclcpp::KeepLast(10));
+    qos.reliability(rclcpp::ReliabilityPolicy::Reliable);
+    qos.durability(rclcpp::DurabilityPolicy::Volatile);
     
     sub_ = node_->create_subscription<sensor_msgs::msg::PointCloud2>(
         config_.topic,
@@ -52,7 +52,7 @@ bool LidarProcessor::start()
     is_running_.store(true);
     
     RCLCPP_INFO(node_->get_logger(),
-        "Started LiDAR processor: %s (QoS: BestEffort)", config_.name.c_str());
+        "Started LiDAR processor: %s (QoS: Reliable)", config_.name.c_str());
     
     return true;
 }

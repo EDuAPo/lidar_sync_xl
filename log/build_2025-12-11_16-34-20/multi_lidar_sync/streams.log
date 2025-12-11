@@ -1,0 +1,37 @@
+[0.005s] Invoking command in '/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync -- -j24 -l24
+[0.033s] [35m[1mConsolidate compiler generated dependencies of target multi_lidar_sync_node[0m
+[0.044s] [ 20%] [32mBuilding CXX object CMakeFiles/multi_lidar_sync_node.dir/src/lidar_processor.cpp.o[0m
+[3.936s] [ 40%] [32m[1mLinking CXX executable multi_lidar_sync_node[0m
+[4.175s] [100%] Built target multi_lidar_sync_node
+[4.188s] Invoked command in '/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync -- -j24 -l24
+[4.193s] Invoking command in '/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync
+[4.198s] -- Install configuration: ""
+[4.198s] -- Installing: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/lib/multi_lidar_sync/multi_lidar_sync_node
+[4.198s] -- Set runtime path of "/home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/lib/multi_lidar_sync/multi_lidar_sync_node" to ""
+[4.199s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/launch
+[4.199s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/launch/multi_lidar_sync.launch.py
+[4.199s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/config
+[4.199s] -- Installing: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/config/params.yaml
+[4.199s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/config/lidar_config.yaml
+[4.200s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/include
+[4.200s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/include/multi_lidar_sync
+[4.200s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/include/multi_lidar_sync/multi_lidar_processor.hpp
+[4.200s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/include/multi_lidar_sync/lidar_types.hpp
+[4.200s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/include/multi_lidar_sync/lidar_buffer_manager.hpp
+[4.200s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/include/multi_lidar_sync/lidar_processor.hpp
+[4.200s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/ament_index/resource_index/package_run_dependencies/multi_lidar_sync
+[4.200s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/ament_index/resource_index/parent_prefix_path/multi_lidar_sync
+[4.201s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/environment/ament_prefix_path.sh
+[4.201s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/environment/ament_prefix_path.dsv
+[4.201s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/environment/path.sh
+[4.201s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/environment/path.dsv
+[4.201s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/local_setup.bash
+[4.201s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/local_setup.sh
+[4.201s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/local_setup.zsh
+[4.201s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/local_setup.dsv
+[4.201s] -- Installing: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/package.dsv
+[4.201s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/ament_index/resource_index/packages/multi_lidar_sync
+[4.201s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/cmake/multi_lidar_syncConfig.cmake
+[4.201s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/cmake/multi_lidar_syncConfig-version.cmake
+[4.201s] -- Up-to-date: /home/zgw/Desktop/algo/lidar_sync_ws/install/multi_lidar_sync/share/multi_lidar_sync/package.xml
+[4.201s] Invoked command in '/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync
