@@ -1,0 +1,48 @@
+# ROS 2 参数文件格式
+multi_lidar_sync_node:
+  ros__parameters:
+    global_settings:
+      lidar_count: 5
+      sync_tolerance_ms: 100.0
+      max_queue_size: 10
+      publish_rate_hz: 10.0
+      enable_diagnostics: true
+      drop_unsync_frames: true
+      publish_fused_cloud: false
+      fused_topic: "/fusion/points"
+      fused_frame_id: "fusion_base"
+      enable_camera_sync: false
+      camera_sync_topic: "/fusion/camera_sync"
+      camera_sync_tolerance_ms: 5.0
+
+    lidars:
+      0:
+        id: 0
+        name: "iv_points_front_left"
+        topic: "/iv_points_front_left"
+        frame_id: "iv_points_front_left"
+        enabled: true
+      1:
+        id: 1
+        name: "iv_points_front_right"
+        topic: "/iv_points_front_right"
+        frame_id: "iv_points_front_right"
+        enabled: true
+      2:
+        id: 2
+        name: "iv_points_front_mid"
+        topic: "/iv_points_front_mid"
+        frame_id: "iv_points_front_mid"
+        enabled: true
+      3:
+        id: 3
+        name: "iv_points_rear_left"
+        topic: "/iv_points_rear_left"
+        frame_id: "iv_points_rear_left"
+        enabled: true
+      4:
+        id: 4
+        name: "iv_points_rear_right"
+        topic: "/iv_points_rear_right"
+        frame_id: "iv_points_rear_right"
+        enabled: true

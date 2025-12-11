@@ -39,9 +39,11 @@ bool LidarProcessor::start()
         return false;
     }
     
-    // 创建订阅者
+    // 创建订阅者 - 使用 RELIABLE QoS 以兼容 rosbag 播放
+    // 同时也兼容 best_effort 的实时数据源
     auto qos = rclcpp::QoS(rclcpp::KeepLast(10));
-    qos.best_effort();  // 使用 best_effort 以匹配大多数激光雷达
+    qos.reliability(rclcpp::ReliabilityPolicy::Reliable);
+    qos.durability(rclcpp::DurabilityPolicy::Volatile);
     
     sub_ = node_->create_subscription<sensor_msgs::msg::PointCloud2>(
         config_.topic,
@@ -91,6 +93,10 @@ void LidarProcessor::pointCloudCallback(const sensor_msgs::msg::PointCloud2::Sha
     
     frame.valid = true;
     frame.lidar_id = config_.id;
+    
+    RCLCPP_DEBUG_THROTTLE(node_->get_logger(), *node_->get_clock(), 2000,
+        "LiDAR %s received frame seq=%u ts=%lu ns",
+        config_.name.c_str(), frame.sequence, frame.timestamp_ns);
     
     // 写入缓冲区
     if (!buffer_manager->setFrame(frame))

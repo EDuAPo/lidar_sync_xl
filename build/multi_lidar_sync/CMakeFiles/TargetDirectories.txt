@@ -1,0 +1,10 @@
+/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync/CMakeFiles/uninstall.dir
+/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync/CMakeFiles/multi_lidar_sync_uninstall.dir
+/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync/CMakeFiles/multi_lidar_sync_node.dir
+/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync/CMakeFiles/test.dir
+/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync/CMakeFiles/edit_cache.dir
+/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync/CMakeFiles/rebuild_cache.dir
+/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync/CMakeFiles/list_install_components.dir
+/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync/CMakeFiles/install.dir
+/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync/CMakeFiles/install/local.dir
+/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync/CMakeFiles/install/strip.dir

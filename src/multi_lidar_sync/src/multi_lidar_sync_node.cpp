@@ -1,11 +1,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/point_cloud2.hpp>
 #include <std_msgs/msg/header.hpp>
-#include <pcl_conversions/pcl_conversions.h>
-#include <pcl/point_cloud.h>
-#include <pcl/point_types.h>
 #include <limits>
-#include <exception>
 #include "multi_lidar_sync/multi_lidar_processor.hpp"
 #include "multi_lidar_sync/lidar_types.hpp"
 
@@ -18,9 +14,15 @@ public:
     MultiLidarSyncNode()
         : Node("multi_lidar_sync_node")
     {
-        // 加载参数
+        // 加载参数（processor_ 稍后在 init 中创建以避免 bad_weak_ptr）
         loadParameters();
-        
+    }
+
+    /**
+     * @brief 两阶段初始化：在 shared_ptr 构造完成后调用
+     */
+    void init()
+    {
         // 创建多激光雷达处理器
         processor_ = std::make_shared<MultiLidarProcessor>(
             shared_from_this(), lidar_configs_, global_settings_);
@@ -212,7 +214,8 @@ private:
         {
             return;
         }
-        last_published_sync_ns_ = fused_cloud->header.stamp.nanoseconds();
+        last_published_sync_ns_ = static_cast<uint64_t>(fused_cloud->header.stamp.sec) * 1000000000ULL
+                                    + fused_cloud->header.stamp.nanosec;
         fused_cloud_pub_->publish(*fused_cloud);
     }
 
@@ -230,9 +233,11 @@ private:
         header.stamp = reference_time;
         camera_sync_pub_->publish(header);
 
+        uint64_t ref_ns = static_cast<uint64_t>(reference_time.seconds()) * 1000000000ULL
+                         + static_cast<uint64_t>(reference_time.nanoseconds() % 1000000000ULL);
         if (last_camera_sync_ns_ != 0)
         {
-            double delta_ms = static_cast<double>(reference_time.nanoseconds() - last_camera_sync_ns_) / 1e6;
+            double delta_ms = static_cast<double>(ref_ns - last_camera_sync_ns_) / 1e6;
             if (delta_ms > global_settings_.camera_sync_tolerance_ms)
             {
                 RCLCPP_WARN_THROTTLE(get_logger(), *get_clock(), 2000,
@@ -241,7 +246,7 @@ private:
                     global_settings_.camera_sync_tolerance_ms);
             }
         }
-        last_camera_sync_ns_ = reference_time.nanoseconds();
+        last_camera_sync_ns_ = ref_ns;
     }
 
     rclcpp::Time computeReferenceTime(const std::vector<SyncedLidarPacket>& packets) const
@@ -257,47 +262,66 @@ private:
         return rclcpp::Time(min_ts, RCL_ROS_TIME);
     }
 
+    /**
+     * @brief 简单拼接点云（不做坐标变换，仅合并原始数据）
+     */
     sensor_msgs::msg::PointCloud2::SharedPtr buildFusedCloud(
         const std::vector<SyncedLidarPacket>& packets)
     {
-        pcl::PointCloud<pcl::PointXYZI> fused;
-        bool has_points = false;
-
+        // 计算总点数和字段信息
+        size_t total_points = 0;
+        const sensor_msgs::msg::PointCloud2* first_valid = nullptr;
+        
         for (const auto& packet : packets)
         {
-            if (!packet.cloud)
+            if (packet.cloud && packet.cloud->width * packet.cloud->height > 0)
             {
-                continue;
+                total_points += packet.cloud->width * packet.cloud->height;
+                if (!first_valid)
+                {
+                    first_valid = packet.cloud.get();
+                }
             }
-            pcl::PointCloud<pcl::PointXYZI> tmp_cloud;
-            try
-            {
-                pcl::fromROSMsg(*packet.cloud, tmp_cloud);
-            }
-            catch (const std::exception& e)
-            {
-                RCLCPP_WARN(get_logger(),
-                    "Failed to convert cloud for LiDAR %d: %s",
-                    packet.lidar_id,
-                    e.what());
-                continue;
-            }
-            fused += tmp_cloud;
-            has_points = true;
         }
-
-        if (!has_points)
+        
+        if (!first_valid || total_points == 0)
         {
             return nullptr;
         }
-
+        
+        // 创建融合点云消息
         auto fused_msg = std::make_shared<sensor_msgs::msg::PointCloud2>();
-        pcl::toROSMsg(fused, *fused_msg);
-        auto reference_time = computeReferenceTime(packets);
-        fused_msg->header.stamp = reference_time;
+        fused_msg->header.stamp = computeReferenceTime(packets);
         fused_msg->header.frame_id = global_settings_.fused_frame_id.empty()
             ? packets.front().frame_id
             : global_settings_.fused_frame_id;
+        
+        // 复制字段定义
+        fused_msg->fields = first_valid->fields;
+        fused_msg->point_step = first_valid->point_step;
+        fused_msg->is_bigendian = first_valid->is_bigendian;
+        fused_msg->is_dense = first_valid->is_dense;
+        
+        // 设置尺寸
+        fused_msg->width = total_points;
+        fused_msg->height = 1;
+        fused_msg->row_step = fused_msg->point_step * fused_msg->width;
+        
+        // 分配数据空间并拷贝
+        fused_msg->data.resize(fused_msg->row_step);
+        size_t offset = 0;
+        
+        for (const auto& packet : packets)
+        {
+            if (packet.cloud && !packet.cloud->data.empty())
+            {
+                std::memcpy(fused_msg->data.data() + offset,
+                           packet.cloud->data.data(),
+                           packet.cloud->data.size());
+                offset += packet.cloud->data.size();
+            }
+        }
+        
         return fused_msg;
     }
 
@@ -312,6 +336,7 @@ int main(int argc, char** argv)
     rclcpp::init(argc, argv);
     
     auto node = std::make_shared<multi_lidar_sync::MultiLidarSyncNode>();
+    node->init();  // 两阶段初始化，避免 bad_weak_ptr
     
     rclcpp::spin(node);
     

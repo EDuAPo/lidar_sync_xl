@@ -83,8 +83,8 @@ bool LidarBufferManager::getLatestMetadata(uint64_t& timestamp_ns, uint32_t& seq
     timestamp_ns = buffers_[current_ready].timestamp_ns;
     sequence = buffers_[current_ready].sequence;
     
-    // 检查数据是否有效
-    if (!buffers_[current_ready].valid || sequence == 0)
+    // 检查数据是否有效 (不再检查 sequence == 0，因为序号从 0 开始是合法的)
+    if (!buffers_[current_ready].valid)
     {
         return false;
     }

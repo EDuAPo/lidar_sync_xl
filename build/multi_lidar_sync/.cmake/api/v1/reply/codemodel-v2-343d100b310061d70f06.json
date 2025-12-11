@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-4cfebc55b62b428e3c87.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "multi_lidar_sync",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "multi_lidar_sync_node::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-multi_lidar_sync_node-1bfe5166a859bf4f08b1.json",
+					"name" : "multi_lidar_sync_node",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "multi_lidar_sync_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-multi_lidar_sync_uninstall-0ba27bc7f7c63a918bda.json",
+					"name" : "multi_lidar_sync_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-9623500054393d727d98.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/zgw/Desktop/algo/lidar_sync_ws/build/multi_lidar_sync",
+		"source" : "/home/zgw/Desktop/algo/lidar_sync_ws/src/multi_lidar_sync"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

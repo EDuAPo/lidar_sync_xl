@@ -140,6 +140,10 @@ void MultiLidarProcessor::syncLoop()
 
 void MultiLidarProcessor::pollLidarStates()
 {
+    int empty_count = 0;
+    int new_count = 0;
+    int stale_count = 0;
+    
     for (size_t i = 0; i < lidars_.size(); ++i)
     {
         uint64_t ts;
@@ -156,16 +160,30 @@ void MultiLidarProcessor::pollLidarStates()
             if (diff > 0)
             {
                 frame_states_[i].status = FrameStatus::NEW;
+                new_count++;
             }
             else
             {
                 frame_states_[i].status = FrameStatus::STALE;
+                stale_count++;
             }
         }
         else
         {
             frame_states_[i].status = FrameStatus::EMPTY;
+            empty_count++;
         }
+    }
+    
+    // 每2秒输出一次状态
+    static auto last_log = std::chrono::steady_clock::now();
+    auto now = std::chrono::steady_clock::now();
+    if (std::chrono::duration_cast<std::chrono::seconds>(now - last_log).count() >= 2)
+    {
+        RCLCPP_INFO(node_->get_logger(), 
+            "Poll status: empty=%d new=%d stale=%d", 
+            empty_count, new_count, stale_count);
+        last_log = now;
     }
 }
 
